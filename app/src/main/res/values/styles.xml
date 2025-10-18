@@ -1,6 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Tema Principal AppGastos -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Estilo personalizado para la app -->
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimaryDark">@color/primary_blue_dark</item>
+        <item name="colorAccent">@color/secondary_green</item>
+        <item name="android:windowBackground">@color/background_white</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+    </style>
+
+    <!-- Estilo para Botones Principales -->
+    <style name="ButtonPrimary" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_primary_bg</item>
+        <item name="android:textColor">@color/text_on_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <!-- Estilo para Botones Secundarios -->
+    <style name="ButtonSecondary" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_secondary_bg</item>
+        <item name="android:textColor">@color/primary_blue</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <!-- Estilo para Botones de Advertencia -->
+    <style name="ButtonWarning" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_warning_bg</item>
+        <item name="android:textColor">@color/text_on_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <!-- Estilo para Títulos -->
+    <style name="TitleText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary_blue</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
+
+    <!-- Estilo para Subtítulos -->
+    <style name="SubtitleText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <!-- Estilo para Texto de Montos (Gastos) -->
+    <style name="AmountText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/warning_red</item>
+    </style>
+
+    <!-- Estilo para EditText -->
+    <style name="InputField" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/edittext_bg</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <!-- Estilo para ListView -->
+    <style name="ListViewStyle">
+        <item name="android:background">@color/surface_light_gray</item>
+        <item name="android:divider">@color/divider_gray</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:padding">8dp</item>
     </style>
 </resources>

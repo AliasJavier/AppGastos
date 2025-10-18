@@ -8,35 +8,31 @@
 
     <TextView
         android:id="@+id/textViewWelcome"
+        style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¡Bienvenido a AppGastos!"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="32dp" />
+        android:text="¡Bienvenido a AppGastos!" />
 
     <Button
         android:id="@+id/btnCategories"
+        style="@style/ButtonPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gestionar Categorías"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp" />
+        android:text="Gestionar Categorías" />
 
     <Button
         android:id="@+id/btnExpenses"
+        style="@style/ButtonPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Añadir Gastos"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp" />
+        android:text="Añadir Gastos" />
 
     <Button
         android:id="@+id/btnExport"
+        style="@style/ButtonWarning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Exportar Datos"
-        android:textSize="16sp"
         android:layout_marginBottom="16dp" />
 
 </LinearLayout>

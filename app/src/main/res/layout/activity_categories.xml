@@ -6,34 +6,30 @@
     android:padding="16dp">
 
     <TextView
+        style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gestionar Categorías"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:text="Gestionar Categorías" />
 
     <EditText
         android:id="@+id/etCategoryName"
+        style="@style/InputField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre de la categoría"
-        android:layout_marginBottom="8dp" />
+        android:hint="Nombre de la categoría" />
 
     <Button
         android:id="@+id/btnAddCategory"
+        style="@style/ButtonPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Añadir Categoría"
-        android:layout_marginBottom="16dp" />
+        android:text="Añadir Categoría" />
 
     <TextView
+        style="@style/SubtitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Categorías existentes:"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+        android:text="Categorías existentes:" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,16 +37,19 @@
         android:text="Toca una categoría para eliminarla"
         android:textSize="12sp"
         android:textStyle="italic"
+        android:textColor="@color/text_secondary"
         android:layout_marginBottom="8dp" />
 
     <ListView
         android:id="@+id/lvCategories"
+        style="@style/ListViewStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
     <Button
         android:id="@+id/btnBackToMain"
+        style="@style/ButtonSecondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Volver al Menú Principal"

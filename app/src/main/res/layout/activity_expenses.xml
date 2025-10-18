@@ -6,28 +6,29 @@
     android:padding="16dp">
 
     <TextView
+        style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir Gasto"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:text="Añadir Gasto" />
 
     <Spinner
         android:id="@+id/spCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/edittext_bg"
+        android:padding="12dp"
         android:layout_marginBottom="8dp" />
 
     <EditText
         android:id="@+id/etExpenseName"
+        style="@style/InputField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descripción del gasto"
-        android:layout_marginBottom="8dp" />
+        android:hint="Descripción del gasto" />
 
     <Button
         android:id="@+id/btnSelectDate"
+        style="@style/ButtonSecondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Seleccionar Fecha"
@@ -39,39 +40,40 @@
         android:layout_height="wrap_content"
         android:text="Fecha: Hoy"
         android:textSize="14sp"
+        android:textColor="@color/text_secondary"
         android:layout_marginBottom="8dp" />
 
     <EditText
         android:id="@+id/etExpenseAmount"
+        style="@style/InputField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Cantidad (€)"
-        android:inputType="numberDecimal"
-        android:layout_marginBottom="8dp" />
+        android:inputType="numberDecimal" />
 
     <Button
         android:id="@+id/btnAddExpense"
+        style="@style/ButtonPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Añadir Gasto"
-        android:layout_marginBottom="16dp" />
+        android:text="Añadir Gasto" />
 
     <TextView
+        style="@style/SubtitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gastos registrados:"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+        android:text="Gastos registrados:" />
 
     <ListView
         android:id="@+id/lvExpenses"
+        style="@style/ListViewStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
     <Button
         android:id="@+id/btnBackToMain"
+        style="@style/ButtonSecondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Volver al Menú Principal"
