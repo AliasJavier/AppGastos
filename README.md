@@ -77,4 +77,40 @@ El archivo CSV se guarda en el almacenamiento interno y los datos se eliminan de
 
 ---
 
+## Errores solucionados y migraciones
+
+Durante el desarrollo y migración del proyecto se resolvieron los siguientes problemas:
+
+1. **Errores de Gradle y versiones incompatibles**
+   - Indentación incorrecta en `build.gradle`.
+   - Actualización de la versión de Gradle y del plugin de Android.
+   - Unificación de la versión de Java y Kotlin (JVM target 17).
+   - Migración a AndroidX y corrección de warnings en `gradle.properties`.
+
+2. **Problemas en el AndroidManifest.xml**
+   - Eliminación del atributo `package` duplicado.
+   - Añadido `android:exported` en actividades para cumplir requisitos de Android 12+.
+   - Corrección de referencias a iconos y recursos.
+
+3. **Recursos faltantes**
+   - Creación de la carpeta `mipmap` y generación de iconos necesarios.
+
+4. **Room Database**
+   - Implementación del patrón singleton en `AppDatabase.kt` para evitar errores de instancia.
+   - Uso de `exportSchema = false` para suprimir advertencias.
+
+5. **Errores de Jetpack Compose y Kotlin**
+   - Alineación de versiones de Compose y Kotlin para evitar conflictos de compilador.
+   - Eliminación completa de dependencias de Compose y Activity Compose en `build.gradle`.
+   - Limpieza de código fuente: se eliminaron todas las referencias y pantallas basadas en Compose.
+   - Adaptación de las actividades y pantallas para usar layouts XML tradicionales.
+
+6. **Limpieza de artefactos de compilación**
+   - Eliminación manual de las carpetas `build` y `.gradle` para evitar errores persistentes.
+
+7. **Compilación final exitosa**
+   - El proyecto compila correctamente usando solo dependencias compatibles y layouts XML.
+
+---
+
 Para cualquier duda o mejora, puedes consultar el código fuente y el README adjunto.

@@ -1,21 +1,12 @@
 package com.example.appgastos.ui
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import com.example.appgastos.ui.screens.MainScreen
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            MaterialTheme {
-                Surface {
-                    MainScreen()
-                }
-            }
-        }
+        // Jetpack Compose eliminado. Usa setContentView con un layout XML.
+        // setContentView(R.layout.activity_main)
     }
 }

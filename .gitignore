@@ -1,0 +1,44 @@
+# Android/IntelliJ/Gradle
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+app/build/
+*.iml
+*.apk
+*.ap_*
+*.dex
+*.class
+*.log
+*.hprof
+*.lock
+*.tmp
+*.orig
+*.rej
+*.swp
+*.swo
+*.bak
+*.~
+*.keystore
+captures/
+output.json
+
+# Emulador y dispositivos
+*.avd/
+*.ini
+*.user
+
+# Sistema operativo
+Thumbs.db
+Desktop.ini
+
+# Otros
+*.orig
+*.rej
+
+# Node/npm (si usas)
+node_modules/
+
+# CSV y archivos exportados
+*.csv
