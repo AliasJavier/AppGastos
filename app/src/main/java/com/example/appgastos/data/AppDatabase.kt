@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.appgastos.model.Category
 import com.example.appgastos.model.Expense
 
-@Database(entities = [Category::class, Expense::class], version = 1)
+@Database(entities = [Category::class, Expense::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun expenseDao(): ExpenseDao
