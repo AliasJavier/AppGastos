@@ -253,9 +253,11 @@ class SyncActivity : AppCompatActivity() {
     
     private fun testServerEndpoint(ip: String, port: Int): Boolean {
         return try {
+            android.util.Log.d("SyncActivity", "Probando conexión a http://$ip:$port/api/server-info/")
+            
             val client = OkHttpClient.Builder()
-                .connectTimeout(2, TimeUnit.SECONDS)
-                .readTimeout(2, TimeUnit.SECONDS)
+                .connectTimeout(3, TimeUnit.SECONDS)
+                .readTimeout(3, TimeUnit.SECONDS)
                 .build()
             
             val request = Request.Builder()
@@ -266,9 +268,16 @@ class SyncActivity : AppCompatActivity() {
             val response = client.newCall(request).execute()
             val responseBody = response.body?.string() ?: ""
             
+            android.util.Log.d("SyncActivity", "Respuesta de $ip: ${response.code} - $responseBody")
+            
             // Verificar que la respuesta contiene la identificación de tu API
-            response.isSuccessful && responseBody.contains("AppGastos API")
+            val isSuccess = response.isSuccessful && responseBody.contains("AppGastos API")
+            if (isSuccess) {
+                android.util.Log.d("SyncActivity", "¡Servidor encontrado en $ip:$port!")
+            }
+            isSuccess
         } catch (e: Exception) {
+            android.util.Log.d("SyncActivity", "Error conectando a $ip:$port - ${e.message}")
             false
         }
     }
@@ -280,16 +289,22 @@ class SyncActivity : AppCompatActivity() {
                 if (!networkInterface.isLoopback && networkInterface.isUp) {
                     val addresses = networkInterface.inetAddresses
                     for (address in addresses) {
-                        if (!address.isLoopbackAddress && 
-                            address is java.net.Inet4Address && 
-                            address.hostAddress?.startsWith("192.168.") == true) {
-                            return address.hostAddress ?: ""
+                        if (!address.isLoopbackAddress && address is java.net.Inet4Address) {
+                            val ip = address.hostAddress ?: ""
+                            android.util.Log.d("SyncActivity", "IP encontrada: $ip")
+                            // Buscar redes privadas comunes
+                            if (ip.startsWith("192.168.") || ip.startsWith("10.") || ip.startsWith("172.")) {
+                                android.util.Log.d("SyncActivity", "Usando IP local: $ip")
+                                return ip
+                            }
                         }
                     }
                 }
             }
+            android.util.Log.d("SyncActivity", "No se encontró IP local válida")
             ""
         } catch (e: Exception) {
+            android.util.Log.e("SyncActivity", "Error obteniendo IP local: ${e.message}")
             ""
         }
     }
