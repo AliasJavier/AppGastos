@@ -8,43 +8,64 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gestionar Categorías"
+        android:text="Añadir Gasto"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
 
-    <EditText
-        android:id="@+id/etCategoryName"
+    <Spinner
+        android:id="@+id/spCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre de la categoría"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/etExpenseName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción del gasto"
         android:layout_marginBottom="8dp" />
 
     <Button
-        android:id="@+id/btnAddCategory"
+        android:id="@+id/btnSelectDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Añadir Categoría"
+        android:text="Seleccionar Fecha"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvSelectedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha: Hoy"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/etExpenseAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cantidad (€)"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btnAddExpense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Añadir Gasto"
         android:layout_marginBottom="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Categorías existentes:"
+        android:text="Gastos registrados:"
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Toca una categoría para eliminarla"
-        android:textSize="12sp"
-        android:textStyle="italic"
-        android:layout_marginBottom="8dp" />
-
     <ListView
-        android:id="@+id/lvCategories"
+        android:id="@+id/lvExpenses"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
