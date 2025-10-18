@@ -28,6 +28,14 @@
         android:text="Añadir Gastos" />
 
     <Button
+        android:id="@+id/btnSync"
+        style="@style/ButtonSecondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sincronizar con Servidor"
+        android:layout_marginBottom="8dp" />
+
+    <Button
         android:id="@+id/btnExport"
         style="@style/ButtonWarning"
         android:layout_width="match_parent"

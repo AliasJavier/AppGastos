@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupViews() {
         val btnCategories = findViewById<android.widget.Button>(R.id.btnCategories)
         val btnExpenses = findViewById<android.widget.Button>(R.id.btnExpenses)
+        val btnSync = findViewById<android.widget.Button>(R.id.btnSync)
         val btnExport = findViewById<android.widget.Button>(R.id.btnExport)
         
         btnCategories.setOnClickListener {
@@ -24,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         
         btnExpenses.setOnClickListener {
             startActivity(Intent(this, ExpensesActivity::class.java))
+        }
+        
+        btnSync.setOnClickListener {
+            startActivity(Intent(this, com.example.appgastos.ui.screens.SyncActivity::class.java))
         }
         
         btnExport.setOnClickListener {
