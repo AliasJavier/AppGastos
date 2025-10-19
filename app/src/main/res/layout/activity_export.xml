@@ -15,18 +15,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exporta todos tus datos a un archivo CSV.\nLos gastos se eliminarán del dispositivo tras la exportación."
+        android:text="Guarda tus datos en un archivo CSV y elige dónde guardarlo en tu teléfono."
         android:textSize="14sp"
         android:textColor="@color/text_secondary"
         android:gravity="center"
         android:layout_marginBottom="32dp" />
 
     <Button
-        android:id="@+id/btnExportData"
-        style="@style/ButtonWarning"
+        android:id="@+id/btnSaveLocal"
+        style="@style/ButtonPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Exportar y Limpiar Datos"
+        android:text="💾 Guardar CSV Localmente"
         android:layout_marginBottom="16dp" />
 
     <TextView

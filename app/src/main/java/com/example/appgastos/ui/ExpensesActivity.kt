@@ -48,6 +48,13 @@ class ExpensesActivity : AppCompatActivity() {
         expenseAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, mutableListOf<String>())
         lvExpenses.adapter = expenseAdapter
         
+        // Añadir funcionalidad para borrar gastos con click normal (como las categorías)
+        lvExpenses.setOnItemClickListener { _, _, position, _ ->
+            if (position < expenses.size) {
+                showDeleteExpenseDialog(expenses[position])
+            }
+        }
+        
         // Mostrar fecha inicial
         updateDateDisplay()
 
@@ -152,5 +159,37 @@ class ExpensesActivity : AppCompatActivity() {
     private fun updateDateDisplay() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         tvSelectedDate.text = "Fecha: ${dateFormat.format(Date(selectedDate))}"
+    }
+    
+    private fun showDeleteExpenseDialog(expense: Expense) {
+        val category = categories.find { it.id == expense.categoryId }?.name ?: "Sin categoría"
+        val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(expense.date))
+        
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("🗑️ Borrar Gasto")
+            .setMessage("¿Estás seguro de que quieres borrar este gasto?\n\n" +
+                       "📝 Nombre: ${expense.name}\n" +
+                       "💰 Cantidad: €${expense.amount}\n" +
+                       "🏷️ Categoría: $category\n" +
+                       "📅 Fecha: $date\n\n" +
+                       "Esta acción no se puede deshacer.")
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton("✅ Sí, Borrar") { _, _ ->
+                deleteExpense(expense)
+            }
+            .setNegativeButton("❌ Cancelar", null)
+            .show()
+    }
+    
+    private fun deleteExpense(expense: Expense) {
+        lifecycleScope.launch {
+            try {
+                database.expenseDao().delete(expense)
+                loadExpenses()
+                Toast.makeText(this@ExpensesActivity, "Gasto eliminado correctamente", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(this@ExpensesActivity, "Error al eliminar gasto: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

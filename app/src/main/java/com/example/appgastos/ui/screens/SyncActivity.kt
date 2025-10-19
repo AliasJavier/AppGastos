@@ -13,6 +13,8 @@ import com.example.appgastos.data.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -74,7 +76,7 @@ class SyncActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             
-            syncWithServer(serverIP, serverPort.toIntOrNull() ?: 8000)
+            showSyncConfirmationDialog(serverIP, serverPort.toIntOrNull() ?: 8000)
         }
         
         btnBack.setOnClickListener {
@@ -179,6 +181,21 @@ class SyncActivity : AppCompatActivity() {
         }
     }
     
+    private fun showSyncConfirmationDialog(serverIP: String, serverPort: Int) {
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("⚠️ Confirmar Sincronización")
+            .setMessage("¿Estás seguro de que quieres enviar todos los datos a:\n\n" +
+                       "🖥️ Servidor: $serverIP:$serverPort\n\n" +
+                       "⚠️ ADVERTENCIA: Todos los gastos locales se BORRARÁN después de la sincronización exitosa.\n\n" +
+                       "Esta acción no se puede deshacer.")
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton("✅ Sí, Sincronizar") { _, _ ->
+                syncWithServer(serverIP, serverPort)
+            }
+            .setNegativeButton("❌ Cancelar", null)
+            .show()
+    }
+    
     private fun discoverServer() {
         lifecycleScope.launch {
             try {
@@ -194,8 +211,8 @@ class SyncActivity : AppCompatActivity() {
                 
                 if (discoveredIP != null) {
                     editTextServerIP.setText(discoveredIP)
-                    textViewStatus.text = "✅ Servidor encontrado en $discoveredIP"
-                    Toast.makeText(this@SyncActivity, "Servidor encontrado: $discoveredIP", Toast.LENGTH_SHORT).show()
+                    textViewStatus.text = "✅ Servidor encontrado en $discoveredIP - Pulsa 'Sincronizar' para enviar datos"
+                    Toast.makeText(this@SyncActivity, "Servidor encontrado: $discoveredIP\nAhora puedes sincronizar manualmente", Toast.LENGTH_LONG).show()
                 } else {
                     textViewStatus.text = "❌ No se encontró servidor en la red"
                     Toast.makeText(this@SyncActivity, "No se encontró servidor en la red", Toast.LENGTH_SHORT).show()
@@ -219,32 +236,47 @@ class SyncActivity : AppCompatActivity() {
         val subnet = localIP.substringBeforeLast(".")
         val port = editTextServerPort.text.toString().toIntOrNull() ?: 8000
         
-        // Primeras IPs comunes que probar
+        // IPs más comunes para probar primero (paralelo)
         val commonIPs = listOf(1, 100, 101, 102, 103, 104, 105, 254)
         
-        // Probar IPs comunes primero
-        for (lastOctet in commonIPs) {
-            val testIP = "$subnet.$lastOctet"
-            withContext(Dispatchers.Main) {
-                textViewStatus.text = "🔍 Probando $testIP:$port..."
-            }
-            
-            if (testServerEndpoint(testIP, port)) {
-                return testIP
-            }
+        withContext(Dispatchers.Main) {
+            textViewStatus.text = "🔍 Escaneando IPs comunes..."
         }
         
-        // Si no encuentra en IPs comunes, escanear toda la subred
-        for (i in 2..253) {
-            if (commonIPs.contains(i)) continue // Ya probadas
-            
-            val testIP = "$subnet.$i"
-            withContext(Dispatchers.Main) {
-                textViewStatus.text = "🔍 Probando $testIP:$port..."
+        // Escaneo paralelo de IPs comunes (más rápido)
+        val commonResults = withContext(Dispatchers.IO) {
+            commonIPs.map { lastOctet ->
+                async {
+                    val testIP = "$subnet.$lastOctet"
+                    if (testServerEndpoint(testIP, port)) testIP else null
+                }
+            }.awaitAll().filterNotNull()
+        }
+        
+        if (commonResults.isNotEmpty()) {
+            return commonResults.first()
+        }
+        
+        withContext(Dispatchers.Main) {
+            textViewStatus.text = "🔍 Escaneando red completa..."
+        }
+        
+        // Si no encuentra en comunes, escanear en chunks paralelos
+        val allIPs = (2..253).filter { !commonIPs.contains(it) }
+        val chunkSize = 20 // Procesar 20 IPs en paralelo
+        
+        for (chunk in allIPs.chunked(chunkSize)) {
+            val results = withContext(Dispatchers.IO) {
+                chunk.map { i ->
+                    async {
+                        val testIP = "$subnet.$i"
+                        if (testServerEndpoint(testIP, port)) testIP else null
+                    }
+                }.awaitAll().filterNotNull()
             }
             
-            if (testServerEndpoint(testIP, port)) {
-                return testIP
+            if (results.isNotEmpty()) {
+                return results.first()
             }
         }
         
@@ -253,15 +285,15 @@ class SyncActivity : AppCompatActivity() {
     
     private fun testServerEndpoint(ip: String, port: Int): Boolean {
         return try {
-            android.util.Log.d("SyncActivity", "Probando conexión a http://$ip:$port/api/server-info/")
+            android.util.Log.d("SyncActivity", "Probando conexión a http://$ip:$port/api/csv/server-info/")
             
             val client = OkHttpClient.Builder()
-                .connectTimeout(3, TimeUnit.SECONDS)
-                .readTimeout(3, TimeUnit.SECONDS)
+                .connectTimeout(800, TimeUnit.MILLISECONDS)
+                .readTimeout(800, TimeUnit.MILLISECONDS)
                 .build()
             
             val request = Request.Builder()
-                .url("http://$ip:$port/api/server-info/")
+                .url("http://$ip:$port/api/csv/server-info/")
                 .get()
                 .build()
             

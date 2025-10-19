@@ -32,7 +32,7 @@
         style="@style/ButtonSecondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sincronizar con Servidor"
+        android:text="Subir Datos al Servidor"
         android:layout_marginBottom="8dp" />
 
     <Button
