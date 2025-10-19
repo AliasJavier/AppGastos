@@ -59,7 +59,7 @@ cd AppGastos
 ```
 
 ### 2. Configuración del servidor (opcional)
-- Instalar Django con endpoint `/api/server-info/` y `/api/csv/upload/`
+- Instalar Django con endpoint `/api/csv/server-info/` y `/api/csv/upload/`
 - Configurar servidor en red local (ej: `python manage.py runserver 0.0.0.0:8000`)
 
 ### 3. Uso de la app
